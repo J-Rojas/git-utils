@@ -7,20 +7,20 @@
 # Please retain the copyright and license terms above.
 #
 
-if [ $# -ne 1 ]
+regex='^(.+?)@(.+?):(.+)/([^/]+)?$'
+
+if [[ $# -ne 1 || !($1 =~ $regex) ]]
 then
    echo "Usage: git-mirror [username]@[servername]:/[git repo path to create on server]"
    exit -1
 fi
 
-echo $1
-
-regex='^(.+?):(.+)/([^/]+)?$'
 if [[ $1 =~ $regex ]]
 then
-  server="${BASH_REMATCH[1]}"
-  dir="${BASH_REMATCH[2]}"
-  git="${BASH_REMATCH[3]}"
+  user="${BASH_REMATCH[1]}"
+  server="${BASH_REMATCH[2]}"
+  dir="${BASH_REMATCH[3]}"
+  git="${BASH_REMATCH[4]}"
   echo "Mirroring current repo to ${server}:${dir}/${git}"
 fi
 
@@ -34,6 +34,6 @@ mkdir -p $dir
 cd $dir
 git --bare init $git
 " |
-ssh $server "bash -s --"
+ssh "${user}@${server}" "bash -s --"
 
-git push --mirror ssh://${server}/${dir}/${git}
+git push --mirror "ssh://${user}@${server}/${dir}/${git}"
