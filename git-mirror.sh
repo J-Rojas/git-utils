@@ -1,10 +1,11 @@
 #/bin/bash
 #
 # Copyright 2012 Author: Jose Rojas (jrojas@redlinesolutions.co)
-#  
+# Source: https://github.com/J-Rojas/git-utils/
+
 # Licensed under GPL version 3 : http://www.gnu.org/licenses/gpl.html
 #
-# Please retain the copyright and license terms above.
+# Please retain the copyright, source and license terms above.
 #
 
 regex='^(.+?)@(.+?):(.+)/([^/]+)?$'
